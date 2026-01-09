@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Qoyyum Kamarudin | Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+
+/* --- SMOOTH SCROLL --- */
+html { scroll-behavior: smooth; }
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html { height: auto; overflow-y: auto; color: #777; line-height: 1.8; transition: background-color 0.5s, color 0.5s; }
+
+
+/* --- ANIMATION: REVEAL ON SCROLL --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* --- DARK MODE STYLES --- */
+body.dark-mode { background-color: #121212; color: #ccc; }
+.dark-mode .w3-white, .dark-mode .w3-light-grey, .dark-mode input.w3-input { background-color: #1e1e1e !important; color: #fff !important; }
+.dark-mode .w3-card, .dark-mode #myNavbar { background-color: #121212 !important; color: #fff !important; }
+.dark-mode .w3-content, .dark-mode .w3-container { background-color: #121212 !important; }
+.dark-mode .w3-text-black, .dark-mode h3 { color: #fff !important; }
+
+
+/* Dark mode untuk contact form card */
+.dark-mode .contact-card { background-color: #1e1e1e !important; box-shadow: 0 4px 10px rgba(255,255,255,0.1) !important; }
+
+
+/* --- VIDEO GALLERY --- */
+.video-container { position: relative; cursor: pointer; border-radius: 8px; overflow: visible; background: #000; }
+.video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; transition: 0.3s; }
+.video-container:hover .video-overlay { background: rgba(0,0,0,0.1); }
+.play-btn { font-size: 50px; }
+
+/* --- LANG TOGGLE UI --- */
+.lang-btn { font-weight: bold; cursor: pointer; }
+
+
+/* --- PARALLAX EFFECT --- */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+  background-attachment: fixed; background-position: center;
+  background-repeat: no-repeat; background-size: cover;
+}
+.bgimg-1 { background-image: url('IMG_7727.jpg'); min-height: 100%; }
+.bgimg-2 { background-image: url("IMG_7722.jpg"); min-height: 400px; }
+/* Picture */
+.bgimg-3 { background-image: url("camera.jpg"); min-height: 400px; } 
+
+/* --- PORTFOLIO HOVER & FILTER --- */
+.portfolio-item { display: none; } 
+.show { display: block; }
+.w3-hover-opacity { cursor: pointer; transition: transform 0.4s; }
+.w3-hover-opacity:hover { transform: scale(1.05); }
+
+/* --- DARK MODE BUTTON --- */
+#darkModeToggle { 
+    width: 40px; height: 40px; border-radius: 50% !important; 
+    padding: 0; display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer; margin-top: 4px; margin-right: 10px;
+}
+
+/* --- MUSIC BUTTON --- */
+#musicContainer { position: fixed; bottom: 20px; left: 20px; z-index: 999; }
+.music-btn {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #000; color: #fff; border: none;
+    cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center; transition: 0.3s;
+}
+.music-btn:hover { transform: scale(1.1); }
+
+/* --- NEW CONTACT SECTION STYLES --- */
+/* Round icon on contact section */
+.contact-icon-box {
+    width: 60px; height: 60px; line-height: 60px; text-align: center;
+    background-color: #f1f1f1; border-radius: 50%; font-size: 24px;
+    margin: 0 auto 16px auto; color: #000; transition: 0.3s;
+}
+.contact-item:hover .contact-icon-box { background-color: #000; color: #fff; }
+
+/* Dark mode icon */
+body.dark-mode .contact-icon-box { background-color: #333; color: #fff; }
+body.dark-mode .contact-item:hover .contact-icon-box { background-color: #fff; color: #000; }
+
+/* GForm input */
+.modern-input {
+    padding: 16px; border: none; background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd; transition: 0.3s; margin-bottom: 16px;
+}
+.modern-input:focus { border-bottom: 2px solid #000; outline: none; }
+
+/* Dark mood for form */
+body.dark-mode .modern-input { background-color: #2a2a2a; color: #fff; border-bottom: 2px solid #444; }
+body.dark-mode .modern-input:focus { border-bottom: 2px solid #fff; }
+
+/*  SEND button */
+.send-button { transition: 0.3s; letter-spacing: 2px; }
+.send-button:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+@media only screen and (max-device-width: 1600px) {
+  .bgimg-1, .bgimg-2, .bgimg-3 { background-attachment: scroll; min-height: 400px; }
+}
+
+
+#darkModeToggle {
+  position: fixed;
+  top: 0px;
+  right: 10px;
+}
+
+</style>
+</head>
+
+
+
+<audio id="toggleSound" src="click sound.WAV" preload="auto"></audio>
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="musicContainer">
+    <button class="music-btn" onclick="toggleMusic()">
+        <i id="musicIcon" class="fa fa-music"></i>
+    </button>
+</div>
+
+<div class="w3-top">
+  <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+      <a id="nav-home" href="#home" class="w3-bar-item w3-button">HOME</a>
+      <a id="nav-about" href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
+      <a id="nav-portfolio" href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
+      <a id="nav-contact" href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+    </div>
+    
+
+<div class="w3-right">
+        <button id="darkModeToggle" onclick="toggleDarkMode()" class="w3-button w3-hover-amber"><i id="darkIcon" class="fa fa-moon-o"></i></button>
+
+  </div>
+
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+    <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>
+    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+  </div>
+</div>
+
+<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+  <div class="w3-display-middle">
+    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">QOYYUM <span class="w3-hide-small">KAMARUDIN</span></span>
+  </div>
+</div>
+
+
+<div class="w3-content w3-container w3-padding-64" id="about">
+  <h3 class="w3-center">OVERVIEW</h3>
+  <p id="about-text">
+  <p>Photography a part of my hobby and I enjoy exploring different photography styles such as nature, street, travel, and candid photography. Photography is not just about taking pictures but it’s about observing details, understanding light, and telling a story in a single frame. Outside of photography, my life is shaped by moments of movement, exploration, and quiet observation. Like playing football, grounds me both physically and mentally. It also teaches me discipline, resilience, teamwork, and the importance of staying present even under pressure. Besides that,  travelling is another things I like too. It allows me to step beyond routine and familiarity, opening my eyes to new places, cultures, and perspectives. Wherever I go, my camera becomes a silent companion, capturing fragments of time that feel honest and unposed, a passing expression and a moment that exists only once. Photography, football, and travel are deeply connected in my life together, they teach me balance between action and stillness, speed and patience, planning and spontaneity.</p>
+  <div class="w3-row">
+    <div class="w3-col m6 w3-center w3-padding-large">
+      <img src="qoyyum (1).jpg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+    </div>
+    <div class="w3-col m6 w3-padding-large">
+      <p>Hello, I’m Muhammad Qoyyum Bin Kamarudin, 21 years old. Study in Information Management at Universiti Teknologi MARA (UiTM). My academic background focuses on programming, record management, archives, and library sciences, which provides me with a structured approach to organizing digital information. My personal interests in photography, football, and traveling.
+
+      Beyond my academic life, I am a passionate photography enthusiast. I view photography as a tool for storytelling, allowing me to preserve unposed emotions and fleeting moments that define our everyday experiences. My life is balanced by the strategic discipline of football and the cultural explorations of traveling. These passions not only refine my creative vision but also enhance my technical skills in visual composition, photo editing, and modern web design.</p>
+      <p id="skills-title" class="w3-large"><b>My Skills:</b></p>
+      <p class="w3-wide"><i class="fa fa-camera"></i><span id="skill-photo">Photography</span></p>
+      <div class="w3-light-grey w3-round-xlarge"><div class="w3-container w3-padding-small w3-dark-grey w3-center w3-round-xlarge" style="width:90%">90%</div></div>
+      <p class="w3-wide"><i class="fa fa-photo"></i> Editing</p>
+      <div class="w3-light-grey w3-round-xlarge"><div class="w3-container w3-padding-small w3-dark-grey w3-center w3-round-xlarge" style="width:80%">80%</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="w3-container w3-light-grey w3-padding-64" id="resume">
+  <div class="w3-content">
+    <h3 class="w3-center">MY RESUME</h3>
+    <div class="w3-row-padding">
+      <div class="w3-half">
+        <h4><i class="fa fa-graduation-cap w3-margin-right"></i>Education</h4>
+        <div class="w3-container w3-card w3-white w3-margin-bottom w3-round">
+          <h5><b>Universiti Teknologi MARA (UiTM)</b></h5>
+          <h6 class="w3-text-grey"><i class="fa fa-calendar w3-margin-right"></i>2023 - 2026</h6>
+          <p>Diploma in Information Management (IM110). Focuses on programming, record management, archives, and library sciences.</p>
+        </div>
+      </div>
+      <div class="w3-half">
+        <h4><i class="fa fa-briefcase w3-margin-right"></i>Experience</h4>
+        <div class="w3-container w3-card w3-white w3-margin-bottom w3-round">
+          <h5><b>Service crew (Part-time)</b></h5>
+          <h6 class="w3-text-grey"><i class="fa fa-calendar w3-margin-right"></i>2024 - Now</h6>
+          <p>The scope of work includes cashier, barista and serving.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle"><span class="w3-xxlarge w3-text-black w3-wide">PORTFOLIO</span></div>
+</div>
+
+<div class="w3-content w3-container w3-padding-64" id="portfolio">
+  <h3 id="portfolio-title" class="w3-center">MY WORK</h3>
+  <p class="w3-center"><em>Here are some of my moments.</em></p>
+  <div class="w3-center w3-padding-32">
+    <button class="w3-button w3-black w3-round-large w3-margin-bottom" onclick="filterSelection('all')">Show all</button>
+    <button class="w3-button w3-white w3-border w3-round-large w3-margin-bottom" onclick="filterSelection('nature')">Nature</button>
+    <button class="w3-button w3-white w3-border w3-round-large w3-margin-bottom" onclick="filterSelection('football')">Football</button>
+  </div>
+  <div class="w3-row-padding w3-center">
+    <div class="w3-col m3 portfolio-item nature">
+      <img src="IMG_6771.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Sunset Cenang">
+    </div>
+    <div class="w3-col m3 portfolio-item nature">
+      <img src="IMG_1160.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Sendayan mosque">
+    </div>
+    <div class="w3-col m3 portfolio-item football">
+      <img src="IMG_0559.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Playing Football">
+    </div>
+    <div class="w3-col m3 portfolio-item nature">
+      <img src="IMG_3354.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Forest Sunlight">
+    </div>
+  </div>
+</div>
+
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle"><span class="w3-xxlarge w3-text-grey w3-wide">CONTACT</span></div>
+</div>
+
+<div class="w3-content w3-container w3-padding-64" id="contact">
+  <h3 id="contact-title" class="w3-center w3-text-black">GET IN TOUCH</h3>
+  <p class="w3-center w3-large"><em>If you have any inquiry, you can leave a message.</em></p>
+  
+  <div class="w3-row w3-padding-32 w3-section">
+    <div class="w3-col m5 w3-container w3-center">
+        <div class="w3-padding-16 contact-item">
+    <a href="https://share.google/qonSlvELdu0v7J1lg" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="contact-icon-box"><i class="fa fa-map-marker"></i></div>
+            <p class="w3-large">Selangor, Malaysia</p>
+        </div>
+        <div class="w3-padding-16 contact-item">
+    <a href="mailto:mqoyyumkamarudin@gmail.com" style="text-decoration:none; color:inherit;">
+        <div class="contact-icon-box"><i class="fa fa-envelope"></i></div>
+        <p>mqoyyumkamarudin@gmail.com</p>
+    </a>
+</div>
+
+<div class="w3-padding-16 contact-item">
+    <a href="tel:+60165822068" style="text-decoration:none; color:inherit;">
+        <div class="contact-icon-box"><i class="fa fa-phone"></i></div>
+        <p>+60 16-582 2068</p>
+    </a>
+</div>
+    </div>
+
+    <div class="w3-col m7 w3-panel">
+
+        <div class="w3-card-4 w3-padding-large w3-round-large w3-white contact-card">
+          <h4 class="w3-center w3-margin-bottom">Send me a message</h4>
+            <form action="https://formspree.io/f/mqoyyumkamarudin@gmail.com" method="POST">
+            <div class="w3-row-padding" style="margin:0 -16px;">
+              <div class="w3-half">
+                  <input id="form-name" class="w3-input modern-input" type="text" name="name" placeholder="Full Name" required>
+    </div>
+    <div class="w3-half">
+      <input class="w3-input modern-input" type="email" name="email" placeholder="Email Address" required>
+    </div>
+  </div>
+  <input class="w3-input modern-input" type="text" name="subject" placeholder="Subject" required>
+  <textarea id="form-msg" class="w3-input modern-input" name="message" style="resize:none; height:100px;" placeholder="Your Message" required></textarea>
+  
+  <input type="hidden" name="_to" value="2023620596@student.uitm.edu.my">
+  
+  <button id="btn-send" class="w3-button w3-black w3-right w3-section w3-round send-button" type="submit">
+                <i class="fa fa-paper-plane w3-margin-right"></i> SEND MESSAGE
+            </button>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+  <a href="#home" class="w3-button w3-light-grey w3-round w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+  <div class="w3-xlarge w3-section">
+    <a href="https://www.instagram.com/yumss_._?igsh=Nmk4a2Y3bm5taGR2&utm_source=qr" target="_blank" style="color:white; text-decoration:none;">
+        <i class="fa fa-instagram w3-hover-opacity"></i>
+    </a>
+    <i class="fa fa-facebook-official w3-hover-opacity w3-margin-left"></i>
+    <i class="fa fa-linkedin w3-hover-opacity w3-margin-left"></i>
+  </div>
+  <p>Created by Qoyyum Kamarudin</p>
+</footer>
+
+<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
+  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+    <img id="img01" class="w3-image">
+    <p id="caption" class="w3-opacity w3-large"></p>
+  </div>
+</div>
+
+<script>
+
+
+// --- SOUND LOGIC ---
+function playSound() {
+  var sound = document.getElementById("toggleSound");
+  sound.currentTime = 0; 
+  sound.play();
+}
+
+
+// --- MUSIC LOGIC ---
+function toggleMusic() {
+    var music = document.getElementById("bgMusic");
+    var icon = document.getElementById("musicIcon");
+    if (music.paused) { music.play(); icon.classList.replace("fa-music", "fa-pause"); } 
+    else { music.pause(); icon.classList.replace("fa-pause", "fa-music"); }
+}
+
+// --- DARK MODE ---
+function toggleDarkMode() {
+  document.getElementById("toggleSound").play();
+  document.body.classList.toggle("dark-mode");
+  var icon = document.getElementById("darkIcon");
+  var btn = document.getElementById("darkModeToggle");
+  if (document.body.classList.contains("dark-mode")) {
+    icon.classList.replace("fa-moon-o", "fa-sun-o");
+    btn.classList.replace("w3-black", "w3-white");
+  } else {
+    icon.classList.replace("fa-sun-o", "fa-moon-o");
+    btn.classList.replace("w3-white", "w3-black");
+  }
+}
+
+
+// --- VIDEO MODAL ---
+function openVideo(src) {
+  var video = document.getElementById("modalVideoPlayer");
+  document.getElementById("videoSrc").src = src;
+  video.load();
+  document.getElementById("videoModal").style.display = "block";
+  video.play();
+}
+function closeVideo() {
+  document.getElementById("modalVideoPlayer").pause();
+  document.getElementById("videoModal").style.display = "none";
+}
+
+
+// --- REVEAL ANIMATION ---
+function reveal() {
+  var reveals = document.querySelectorAll(".reveal");
+  for (var i = 0; i < reveals.length; i++) {
+    var top = reveals[i].getBoundingClientRect().top;
+    if (top < window.innerHeight - 150) reveals[i].classList.add("active");
+  }
+}
+window.addEventListener("scroll", reveal);
+
+// --- PORTFOLIO FILTER ---
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("portfolio-item");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
+function w3AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" "); arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) { if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];} }
+}
+function w3RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" "); arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) { while (arr1.indexOf(arr2[i]) > -1) { arr1.splice(arr1.indexOf(arr2[i]), 1); } }
+  element.className = arr1.join(" ");
+}
+
+// --- MODAL ---
+function onClick(element) {
+  document.getElementById("img01").src = element.src; 
+  document.getElementById("modal01").style.display = "block";
+  document.getElementById("caption").innerHTML = element.alt;
+}
+
+// --- NAVBAR SCROLL ---
+window.onscroll = function() {myFunction()};
+function myFunction() {
+    var navbar = document.getElementById("myNavbar");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+    } else {
+        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+    }
+}
+
+
+</script>
+
+
+</body>
+</html>
